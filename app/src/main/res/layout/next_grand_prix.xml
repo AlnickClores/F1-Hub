@@ -1,107 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    android:background="@drawable/app_widget_background">
+    card_view:cardCornerRadius="16dp"
+    card_view:cardElevation="4dp"
+    android:layout_margin="8dp">
 
-    <!-- Left Column -->
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:layout_width="0dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal">
+        android:padding="8dp"
+        android:background="@drawable/app_widget_background">
 
-        <!-- Race Track Map -->
-        <ImageView
-            android:id="@+id/track_map"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <!-- Left Column -->
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:scaleType="centerCrop"
-            android:src="@drawable/jeddah_street_circuit" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
 
-        <!-- Round Number -->
-        <TextView
-            android:id="@+id/round_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Round 6"
-            android:textStyle="bold"
-            android:textSize="14sp" />
+            <ImageView
+                android:id="@+id/track_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/miamigp" />
 
-        <!-- Country & Flag -->
-        <TextView
-            android:id="@+id/country_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🇸🇦 Saudi Arabia"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/country_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="us United States"
+                android:textSize="14sp"
+                android:layout_marginTop="2dp" />
 
-        <!-- Grand Prix Name -->
-        <TextView
-            android:id="@+id/gp_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Saudi Arabian Grand Prix"
-            android:textStyle="bold"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/gp_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Miami Grand Prix"
+                android:fontFamily="@font/formula1bold"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginTop="2dp" />
 
-        <!-- Event Date -->
-        <TextView
-            android:id="@+id/event_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="18-21 April"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/event_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="03-05 May"
+                android:textSize="13sp"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- Right Column -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <!-- This will be populated dynamically with session date groups -->
+            <LinearLayout
+                android:id="@+id/sessions_group_container"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
     </LinearLayout>
-
-    <!-- Right Column -->
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:gravity="start">
-
-        <TextView
-            android:id="@+id/session_practice1"
-            android:text="Practice 1: 21:30 - 22:30\nApril 18"
-            android:textSize="13sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/session_practice2"
-            android:text="Practice 2: 01:00 - 02:00\nApril 19"
-            android:textSize="13sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/session_practice3"
-            android:text="Practice 3: 21:30 - 22:30\nApril 19"
-            android:textSize="13sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/session_qualifying"
-            android:text="Qualifying: 01:00 - 02:00\nApril 20"
-            android:textSize="13sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/session_race"
-            android:text="Race: 01:00\nApril 21"
-            android:textStyle="bold"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
 </LinearLayout>

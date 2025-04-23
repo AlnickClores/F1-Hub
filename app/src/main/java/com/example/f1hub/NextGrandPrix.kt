@@ -4,10 +4,9 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.widget.RemoteViews
+import android.widget.LinearLayout
+import android.widget.TextView
 
-/**
- * Implementation of App Widget functionality.
- */
 class NextGrandPrix : AppWidgetProvider() {
 
     override fun onUpdate(
@@ -16,24 +15,55 @@ class NextGrandPrix : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         for (widgetId in appWidgetIds) {
-
             val views = RemoteViews(context.packageName, R.layout.next_grand_prix)
 
-            // Example: Update image and text dynamically
-            views.setImageViewResource(R.id.track_map, R.drawable.jeddah_street_circuit)
+            // Set static details
+            views.setImageViewResource(R.id.track_map, R.drawable.miamigp)
+            views.setTextViewText(R.id.country_name, "us United States")
+            views.setTextViewText(R.id.gp_name, "Miami Grand Prix")
+            views.setTextViewText(R.id.event_date, "03-05 May")
 
-            views.setTextViewText(R.id.round_number, "Round 6")
-            views.setTextViewText(R.id.country_name, "🇸🇦 Saudi Arabia")
-            views.setTextViewText(R.id.gp_name, "Saudi Arabian Grand Prix")
-            views.setTextViewText(R.id.event_date, "18-21 April")
+            // Session details
+            val sessions = listOf(
+                Triple("Practice 1", "May 3, Sat", "02:30"),
+                Triple("Spring Qualifying", "May 3, Sat", "04:30"),
+                Triple("Sprint", "May 4, Sun", "02:30"),
+                Triple("Qualifying", "May 4, Sun", "04:00"),
+                Triple("Grand Prix", "May 5, Mon", "04:00")
+            )
 
-            views.setTextViewText(R.id.session_practice1, "Practice 1: 21:30 - 22:30\nApril 18")
-            views.setTextViewText(R.id.session_practice2, "Practice 2: 01:00 - 02:00\nApril 19")
-            views.setTextViewText(R.id.session_practice3, "Practice 3: 21:30 - 22:30\nApril 19")
-            views.setTextViewText(R.id.session_qualifying, "Qualifying: 01:00 - 02:00\nApril 20")
-            views.setTextViewText(R.id.session_race, "Race: 01:00\nApril 21")
+            // Group sessions by date
+            val sessionGroups = mutableMapOf<String, MutableList<Triple<String, String, String>>>()
+            for (session in sessions) {
+                val date = session.second
+                if (!sessionGroups.containsKey(date)) {
+                    sessionGroups[date] = mutableListOf()
+                }
+                sessionGroups[date]?.add(session)
+            }
 
-            // Push update to widget
+            // Reference the container that will hold dynamic sessions
+            val containerId = R.id.sessions_group_container
+
+            // Remove all previous views in the container
+            views.removeAllViews(containerId)
+
+            // Add sessions dynamically
+            for ((date, sessionList) in sessionGroups) {
+                // Add each session for the current date
+                for (session in sessionList) {
+                    val sessionLayout = RemoteViews(context.packageName, R.layout.widget_session_item)
+                    sessionLayout.setTextViewText(R.id.session_name, session.first)
+                    sessionLayout.setTextViewText(R.id.session_time, session.third)
+                    views.addView(containerId, sessionLayout)
+                }
+                // Create a new TextView for the date
+                val dateTextView = RemoteViews(context.packageName, R.layout.widget_text_view)
+                dateTextView.setTextViewText(R.id.widget_text, date)
+                views.addView(containerId, dateTextView)
+            }
+
+            // Update the widget
             appWidgetManager.updateAppWidget(widgetId, views)
         }
     }
